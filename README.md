@@ -1,13 +1,13 @@
 # JavaScript-OIDC-Program
 
-In this example i am running https://github.com/mitreid-connect/OpenID-Connect-Java-Spring-Server on localhost using [TomCat](http://tomcat.apache.org/)  So before you run the `openid-connect-server-webapp` you have to change the `server-config.xml` file to point like this -> ``<property name="issuer" value="http://localhost:8080/openid-connect-server-webapp/" />``
+In this example i am running [OpenID-Connect-Java-Spring-Server](https://github.com/mitreid-connect/OpenID-Connect-Java-Spring-Server) on localhost using [TomCat](http://tomcat.apache.org/)  So before you run the `openid-connect-server-webapp` you have to change the `server-config.xml` file to point like this -> ``<property name="issuer" value="http://localhost:8080/openid-connect-server-webapp/" />``
 
 I am using Apache Server for localhost and the `index.html` of the code to create `Access_Tokens` , `Refresh_Tokens` for the MitreID OpenIDConnect Server .
 
 
 ### You can configurate the settings either by hand or uploading a configuration file in JSON format . It is very simple as shown below.
 
-Check this example [Example JSON Configuration File] ( https://github.com/goxr3plus/JavaScript-OIDC-Program/blob/master/Example%20OpenIDConnect.jSon )
+Check this example [Example JSON Configuration File](https://github.com/goxr3plus/JavaScript-OIDC-Program/blob/master/Example%20OpenIDConnect.jSon)
 
 # Example Configuration File you can use (JSON Format)
 
