@@ -4,4 +4,16 @@ In this example i am running https://github.com/mitreid-connect/OpenID-Connect-J
 
 I am using Apache Server for localhost and the `index.html` of the code to create `Access_Tokens` , `Refresh_Tokens` for the MitreID OpenIDConnect Server .
 
-![Image](https://user-images.githubusercontent.com/20374208/28618064-adb5d682-720b-11e7-8f78-02d5d004d102.png)
+#Example Configuration File you can use (JSON Format)
+
+```
+{
+   "authority": "http://localhost:8080/openid-connect-server-webapp",
+   "client_id": "client",
+   "client_secret": "secret ",
+   "response_type": "code id_token token",
+   "scope": "openid profile email offline_access"
+}
+```
+
+![Image](https://user-images.githubusercontent.com/20374208/28626454-b31ac4ea-7227-11e7-9f45-649734e3422f.png)

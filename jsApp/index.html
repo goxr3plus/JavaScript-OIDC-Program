@@ -4,13 +4,36 @@
 <head>
     <title>JS Application</title>
     <meta charset="utf-8" />
+
+    <!-- ------------------------- LINKS ------------------------------------ -->
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" />
+
     <!--    Bootstrap Select-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
 
     <!--    Bootstrap Tags-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput-typeahead.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" />
+
+    <!-- ------------------------- SCRIPTS ------------------------------------ -->
+
+    <!--Load JQuery-->
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+
+    <!-- Load Bootstrap-->
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+
+    <!--Load oidc-client-->
+    <script src="node_modules/oidc-client/dist/oidc-client.js"></script>
+
+    <!-- Load Bootstrap-tagsinput -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
+    <!-- Drop Zone implementation -->
+    <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/min/dropzone.min.js"></script>-->
 
     <style>
         input {
@@ -46,6 +69,10 @@
             color: white;
         }
 
+        .input-group-addon {
+            min-width: 150px;
+        }
+
     </style>
 </head>
 
@@ -54,16 +81,22 @@
     <div class="container-fluid">
         <div class="row content">
             <div class="col-sm-12">
-                <div class="container main-container">
 
-                    <!-- Navigation Bar-->
-                    <nav class="navbar navbar-inverse navbar-fixed-top">
-                        <div class="container">
-                            <div class="navbar-header" style="margin-left: 33%;">
-                                <a class="navbar-brand" href="#" style="color:white; ">OpenID Connect Javascript Application</a>
-                            </div>
+                <!-- Navigation Bar-->
+                <nav class="navbar navbar-inverse navbar-fixed-top">
+                    <div class="container">
+                        <div class="navbar-header" style="margin-left: 33%;">
+
+                            <a class="navbar-brand" href="#" style="color:white; ">OpenID Connect Javascript Application</a>
+
+
                         </div>
-                    </nav>
+                    </div>
+                </nav>
+
+                <!-- Main Container -->
+                <div id="invisible-div" class="container main-container" style="display:none">
+                    <!-- style="display:none" -->
 
                     <!-- EXTRA URLS  -->
                     <div class="row">
@@ -161,44 +194,44 @@
                                 </optgroup>
                                </select>
 
-                                <input id="api-call-text-field2" type="text" value="clients" class="form-control">
+                                <input id="api-call-text-field" type="text" value="clients" class="form-control">
                             </div>
                         </div>
                     </div>
-                </div>
 
 
 
 
-                <!-- Response_type -->
-                <div class="row">
-                    <div class="container" style="padding-bottom: 3px">
-                        <div class="input-group">
 
-                            <!-- Response type -->
-                            <span class="input-group-addon" style="color:black; font-weight:bold">Response Type</span>
+                    <!-- Response_type -->
+                    <div class="row">
+                        <div class="container" style="padding-bottom: 3px">
+                            <div class="input-group">
 
-                            <!-- Select Picker -->
-                            <select id="response_type" class="selectpicker" multiple data-actions-box="true" data-width="auto">
+                                <!-- Response type -->
+                                <span class="input-group-addon" style="color:black; font-weight:bold">Response Type</span>
+
+                                <!-- Select Picker -->
+                                <select id="response_type" class="selectpicker" multiple data-actions-box="true" data-width="auto">
                               <option>code</option>
                               <option>id_token</option>
                               <option>token</option>
                             </select>
 
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Scopes -->
-                <div class="row">
-                    <div class="container" style="padding-bottom: 3px">
+                    <!-- Scopes -->
+                    <div class="row">
+                        <div class="container" style="padding-bottom: 3px">
 
-                        <div class="input-group">
-                            <!-- Scopes -->
-                            <span class="input-group-addon" style="color:black; font-weight:bold">Scopes</span>
+                            <div class="input-group">
+                                <!-- Scopes -->
+                                <span class="input-group-addon" style="color:black; font-weight:bold">Scopes</span>
 
-                            <!-- Select Picker -->
-                            <select id="scopes" class="selectpicker" multiple data-actions-box="true" data-width="auto">
+                                <!-- Select Picker -->
+                                <select id="scopes" class="selectpicker" multiple data-actions-box="true" data-width="auto">
                               <option>openid</option>
                               <option>profile</option>
                               <option>email</option>
@@ -206,19 +239,33 @@
                               <option>phone</option>
                               <option>offline_access</option>
                             </select>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Buttons -->
-                <div class="row" style="width:500px; margin: 0 auto;">
-                    <div class="col-xs-12">
+                <div class="row" style="margin-left:40%; padding-top:60px">
+                    <div class="col-sm-12">
                         <ul class="list-inline list-unstyled requests">
                             <!--                <li><a href="index.html" class="btn btn-primary">Home</a></li>-->
                             <li><button type="button" class="btn btn-success js-login">Login</button></li>
                             <li><button type="button" class="btn btn-warning js-call-api">Call API</button></li>
                             <li><button type="button" class="btn btn-danger js-logout">Logout</button></li>
+                            <li> <span class="button-checkbox">
+                                   <button type="button" class="btn" data-color="primary">Request Refresh Token</button>
+                                   <input id="request_refresh_token" type="checkbox" class="hidden" />
+                                 </span>
+                            </li>
                         </ul>
+                    </div>
+                </div>
+
+
+                <div class="row" style="margin-left:39%; padding-top: 30px;">
+                    <div class="col-sm-12">
+                        <h4 style="color:white"> Choose JSON Configuration File </h4>
+                        <input type="file" id="file-input" accept=".json" style="cursor:pointer" />
                     </div>
                 </div>
 
@@ -228,154 +275,298 @@
 
                 <div class="container" style="padding-top: 15px">
                     <div class="row">
-                        <div class="col-xs-5">
+                        <div class="col-sm-4">
                             <div class="panel panel-default">
-                                <div class="panel-heading">User data</div>
+                                <div class="panel-heading">File Content</div>
                                 <div class="panel-body">
-                                    <pre class="js-user"></pre>
+                                    <pre id="file-content"></pre>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-xs-5">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">API call result</div>
-                                <div class="panel-body">
-                                    <pre class="js-api-result"></pre>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">User data</div>
+                                    <div class="panel-body">
+                                        <pre class="js-user"></pre>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-xs-2">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">Console data</div>
-                                <div id="extraDiv" style="font-weight:bold" class="panel-body">
-
+                            <div class="col-sm-3">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">API call result</div>
+                                    <div class="panel-body">
+                                        <pre class="js-api-result"></pre>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
-    </div>
 
 
 
 
 
 
-    <!-- ----------------------                       RUN THE MOTHERFUCKER SCRIPTS!!!!!!!!!!                 ------------------------------------ -->
-
-    <!--Load JQuery-->
-    <script src="node_modules/jquery/dist/jquery.js"></script>
-    <!-- Load Bootstrap-->
-    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <!--Load oidc-client-->
-    <script src="node_modules/oidc-client/dist/oidc-client.js"></script>
-
-    <!-- Load Bootstrap-tagsinput -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
-
-    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-*.min.js"></script>-->
-    <script>
-        $('#response_type').selectpicker('selectAll');
-        $('#scopes').selectpicker('val', ['openid', 'profile', 'email', 'offline_access']);
-
-    </script>
+        <!-- ----------------------                       RUN THE MOTHERFUCKER SCRIPTS!!!!!!!!!!                 ------------------------------------ -->
 
 
-    <script>
-        var settings, manager, user;
+        <!--  //Clear all the fields -->
+        <script>
+            $("#authority").val('');
+            //$("#api-call-text-field").val('');
 
-        //---------------Refresh the Manager every time below text fields text is changing---------------------------
+            $("#client_id").val('');
+            $("#client_secret").val('');
 
-        $("#api-call-text-field").on('keyup', function(e) {
-            if (e.keyCode == 13) {
-                callApi();
+
+            //Disable the Buttons by default show the user has to choose a File to Login 
+            $('.js-login').prop("disabled", true);
+            $('.js-call-api').prop("disabled", true);
+            $('.js-logout').prop("disabled", true);
+           
+            //document.getElementById("invisible-div").style.display = "none";
+
+        </script>
+
+        <!--- File API------------------------------->
+
+        <script>
+            // Check for the various File API support.
+            if (window.File && window.FileReader && window.FileList && window.Blob) {
+                // Great success! All the File APIs are supported.
+            } else {
+                alert('The File APIs are not fully supported in this browser.');
             }
-        });
 
-        $('#authority').on('input', function() {
-            updateManager();
-        });
+            function readSingleFile(e) {
+                var file = e.target.files[0];
+                if (!file) {
+                    return;
+                }
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var contents = e.target.result;
+                    displayContents(contents);
+                };
+                reader.readAsText(file);
+            }
 
-        $('#client_secret').on('input', function() {
-            updateManager();
-        });
+            //This method displays the contents of the file
+            function displayContents(contents) {
+                var element = document.getElementById('file-content');
+                element.textContent = contents;
+                var json = JSON.parse(contents);
 
-        $('#client_id').on('input', function() {
-            updateManager();
-        });
-
-        $('#api-select-picker').on('changed.bs.select', function(e) {
-
-            //Value to be set
-            var value = $(this).val().toString();
-
-            //Set the text and focus the text field
-            $("#api-call-text-field2").val(value);
-            $("#api-call-text-field2").focus();
-
-
-            //Select a range of text
-            if (value.indexOf("{id}") >= 0)
-                document.getElementById("api-call-text-field2").setSelectionRange(value.length - 4, value.length);
-
-        });
-
-        $('#HTTP_METHOD').on('changed.bs.select', function(e) {
-
-            //Value to be set
-            var value = $(this).val().toString();
-
-            console.log(value);
-
-            //Select a range of text
-            if (value.indexOf("DELETE") >= 0)
-                $(this).selectpicker('setStyle', 'btn-danger');
-            else
-                $(this).selectpicker('setStyle', 'btn-success');
+                //console.log(json);
 
 
-        });
+                //Clear all the fields
+                $("#authority").val(json.authority);
+                $("#client_id").val(json.client_id);
+                $("#client_secret").val(json.client_secret);
+                $("#response_type").selectpicker('val', json.response_type.split(" "));
+                $("#scopes").selectpicker('val', json.scope.split(" "));
+
+                updateManager();
+
+                //Enable all the buttons and show the div
+                $('.js-login').prop("disabled", false);
+                $('.js-call-api').prop("disabled", false);
+                $('.js-logout').prop("disabled", false);
+               
+                document.getElementById("invisible-div").style.display = "block";
+
+            }
+
+            document.getElementById('file-input')
+                .addEventListener('change', readSingleFile, false);
+
+        </script>
 
 
+        <script>
+            var settings, manager, user;
 
-        //------------------------------------
-
-        $('.js-login').on('click', function() {
-            console.log("Loggin Button pressed");
-            manager.signinPopup().catch(function(error) {
-                console.error('error while logging in through the popup', error);
+            //-----------------Refresh the Manager every time below text fields text is changing---------------------------
+            $("#request_refresh_token").change(function() {
+                if ($(this).is(':checked')) {
+                    
+                   // console.log$("#response_type").val();
+                    
+                  // $("#scopes").selectpicker('val', 'offline_access');
+                } else {
+                    
+                  //  $("#scopes").selectpicker('val', 'offline_access');
+                }
             });
-        });
 
-
-        $('.js-call-api').on('click', function() {
-            callApi();
-        });
-
-
-        $('.js-logout').on('click', function() {
-            manager.signoutRedirect().catch(function(error) {
-                console.error('error while signing out user', error);
+            $("#api-call-text-field").on('keyup', function(e) {
+                if (e.keyCode == 13) {
+                    callApi();
+                }
             });
-        });
+
+            $('#authority').on('input', function() {
+                updateManager();
+            });
+
+            $('#client_secret').on('input', function() {
+                updateManager();
+            });
+
+            $('#client_id').on('input', function() {
+                updateManager();
+            });
+
+            $('#api-select-picker').on('changed.bs.select', function(e) {
+
+                //Value to be set
+                var value = $(this).val().toString();
+
+                //Set the text and focus the text field
+                $("#api-call-text-field").val(value);
+                $("#api-call-text-field").focus();
+
+
+                //Select a range of text
+                if (value.indexOf("{id}") >= 0)
+                    document.getElementById("api-call-text-field").setSelectionRange(value.length - 4, value.length);
+
+            });
+
+            $('#HTTP_METHOD').on('changed.bs.select', function(e) {
+
+                //Value to be set
+                var value = $(this).val().toString();
+
+                console.log(value);
+
+                //Select a range of text     THIS bitch is bugged...
+                //                if (value.indexOf("DELETE") >= 0) {
+                //                    $(this).selectpicker('setStyle', 'btn-warning');
+                //                    console.log("Entered on the DELETE IF");
+                //                } else {
+                //                    $(this).selectpicker('setStyle', 'btn-info');
+                //                    console.log("Entered on the SUCCESS IF");
+                //                }
+
+
+            });
+
+
+
+            //------------------------------------
+
+            $('.js-login').on('click', function() {
+                console.log("Loggin Button pressed");
+                manager.signinPopup().catch(function(error) {
+                    console.error('error while logging in through the popup', error);
+                });
+            });
+
+
+            $('.js-call-api').on('click', function() {
+                callApi();
+            });
+
+
+            $('.js-logout').on('click', function() {
+                manager.signoutRedirect().catch(function(error) {
+                    console.error('error while signing out user', error);
+                });
+            });
 
 
 
 
-        //================== METHODS==================================
+            //================== METHODS==================================
 
-        function callApi() {
+            function callApi() {
+                var headers = {};
+                if (user && user.access_token) {
+                    headers['Authorization'] = 'Bearer ' + user.access_token;
+                }
+
+                $.ajax({
+                    url: $("#authority").val() + "/api/" + $("#api-call-text-field").val(),
+                    method: $("#HTTP_METHOD").val(),
+                    dataType: 'json',
+                    crossDomain: true,
+                    headers: headers
+                }).then(function(data) {
+                    display('.js-api-result', data);
+                }).catch(function(error) {
+                    display('.js-api-result', {
+                        status: error.status,
+                        statusText: error.statusText,
+                        response: error.responseJSON
+                    });
+                });
+            }
+
+
+
+            function updateManager() {
+
+                settings = {
+                    // authority: 'http://snf-761523.vm.okeanos.grnet.gr:8080/openid-connect-server-webapp',
+                    authority: $("#authority").val(),
+                    client_id: $("#client_id").val(),
+                    client_secret: $("#client_secret").val(),
+                    user_id: "user",
+                    popup_redirect_uri: 'http://localhost/jsApp/popup.html',
+                    silent_redirect_uri: 'http://localhost/jsApp/silent-renew.html',
+                    post_logout_redirect_uri: 'http://localhost/jsApp/index.html',
+
+                    response_type: $("#response_type").val().toString().replace(/,/g, ' '),
+                    scope: $("#scopes").val().toString().replace(/,/g, ' '),
+
+                    filterProtocolClaims: false
+                };
+
+                manager = new Oidc.UserManager(settings);
+
+                Oidc.Log.logger = console;
+
+                manager.events.addUserLoaded(function(loadedUser) {
+                    user = loadedUser;
+                    display('.js-user', user);
+                });
+
+                manager.events.addSilentRenewError(function(error) {
+                    console.error('error while renewing the access token', error);
+                });
+
+                manager.events.addUserSignedOut(function() {
+                    alert('The user has signed out');
+                });
+
+            }
+
+            // helper function to show data to the user
+            function display(selector, data) {
+                if (data && typeof data === 'string') {
+                    data = JSON.parse(data);
+                }
+                if (data) {
+                    data = JSON.stringify(data, null, 2);
+                }
+
+                $(selector).text(data);
+            }
+
+            updateManager();
+
 
             //Some extra fancy code here
-            var currentdate = new Date();
+            //var currentdate = new Date();
             //            var datetime = "js-call-api button cliked at: " + currentdate.getDate() + "/" +
             //                (currentdate.getMonth() + 1) + "/" +
             //                currentdate.getFullYear() + " @ " +
@@ -389,96 +580,72 @@
             //                $(this).append($("#extraDiv").val() + "<br>" + datetime).fadeIn(150);
             //            });
 
+            $(function() {
+                $('.button-checkbox').each(function() {
 
+                    // Settings
+                    var $widget = $(this),
+                        $button = $widget.find('button'),
+                        $checkbox = $widget.find('input:checkbox'),
+                        color = $button.data('color'),
+                        settings = {
+                            on: {
+                                icon: 'glyphicon glyphicon-check'
+                            },
+                            off: {
+                                icon: 'glyphicon glyphicon-unchecked'
+                            }
+                        };
 
+                    // Event Handlers
+                    $button.on('click', function() {
+                        $checkbox.prop('checked', !$checkbox.is(':checked'));
+                        $checkbox.triggerHandler('change');
+                        updateDisplay();
+                    });
+                    $checkbox.on('change', function() {
+                        updateDisplay();
+                    });
 
-            var headers = {};
-            if (user && user.access_token) {
-                headers['Authorization'] = 'Bearer ' + user.access_token;
-            }
+                    // Actions
+                    function updateDisplay() {
+                        var isChecked = $checkbox.is(':checked');
 
-            $.ajax({
-                url: $("#authority").val() + "/api/" + $("#api-call-text-field2").val(),
-                method: $("#HTTP_METHOD").val(),
-                dataType: 'json',
-                crossDomain: true,
-                headers: headers
-            }).then(function(data) {
-                display('.js-api-result', data);
-            }).catch(function(error) {
-                display('.js-api-result', {
-                    status: error.status,
-                    statusText: error.statusText,
-                    response: error.responseJSON
+                        // Set the button's state
+                        $button.data('state', (isChecked) ? "on" : "off");
+
+                        // Set the button's icon
+                        $button.find('.state-icon')
+                            .removeClass()
+                            .addClass('state-icon ' + settings[$button.data('state')].icon);
+
+                        // Update the button's color
+                        if (isChecked) {
+                            $button
+                                .removeClass('btn-default')
+                                .addClass('btn-' + color + ' active');
+                        } else {
+                            $button
+                                .removeClass('btn-' + color + ' active')
+                                .addClass('btn-default');
+                        }
+                    }
+
+                    // Initialization
+                    function init() {
+
+                        updateDisplay();
+
+                        // Inject the icon if applicable
+                        if ($button.find('.state-icon').length == 0) {
+                            $button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i> ');
+                        }
+                    }
+                    init();
                 });
             });
-        }
 
-
-
-        function updateManager() {
-
-            settings = {
-                // authority: 'http://snf-761523.vm.okeanos.grnet.gr:8080/openid-connect-server-webapp',
-                authority: $("#authority").val(),
-                client_id: $("#client_id").val(),
-                client_secret: $("#client_secret").val(),
-                user_id: "user",
-                popup_redirect_uri: 'http://localhost/jsApp/popup.html',
-                silent_redirect_uri: 'http://localhost/jsApp/silent-renew.html',
-                post_logout_redirect_uri: 'http://localhost/jsApp/index.html',
-
-                response_type: $("#response_type").val().toString().replace(/,/g, ' '),
-                scope: $("#scopes").val().toString().replace(/,/g, ' '),
-
-                filterProtocolClaims: false
-            };
-
-            manager = new Oidc.UserManager(settings);
-
-            Oidc.Log.logger = console;
-
-            manager.events.addUserLoaded(function(loadedUser) {
-                user = loadedUser;
-                display('.js-user', user);
-            });
-
-            manager.events.addSilentRenewError(function(error) {
-                console.error('error while renewing the access token', error);
-            });
-
-            manager.events.addUserSignedOut(function() {
-                alert('The user has signed out');
-            });
-
-        }
-
-        // helper function to show data to the user
-        function display(selector, data) {
-            if (data && typeof data === 'string') {
-                data = JSON.parse(data);
-            }
-            if (data) {
-                data = JSON.stringify(data, null, 2);
-            }
-
-            $(selector).text(data);
-        }
-
-        updateManager();
-
-        window.onerror = function(error, url, line) {
-            console.log("Error detected!!");
-            $('#extraDiv').fadeOut(150, function() {
-                $(this).append($("#extraDiv").val() + "<br>" + error).fadeIn(150);
-            });
-            //            controller.sendLog({
-            //                acc: 'error',
-            //                data: 'ERR:' + error + ' URL:' + url + ' L:' + line
-            //            });
-        };
-
-    </script>
+        </script>
 
 </body>
 
