@@ -1,0 +1,7 @@
+{
+   "authority": "http://localhost:8080/openid-connect-server-webapp",
+   "client_id": "client",
+   "client_secret": "secret ",
+   "response_type": "code id_token token",
+   "scope": "openid profile email offline_access"
+}
