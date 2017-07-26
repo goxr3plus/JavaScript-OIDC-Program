@@ -7,6 +7,8 @@ I am using Apache Server for localhost and the `index.html` of the code to creat
 
 ### You can configurate the settings either by hand or uploading a configuration file in JSON format . It is very simple as shown below.
 
+Check this example [Example JSON Configuration File] ( https://github.com/goxr3plus/JavaScript-OIDC-Program/blob/master/Example%20OpenIDConnect.jSon )
+
 # Example Configuration File you can use (JSON Format)
 
 ```
