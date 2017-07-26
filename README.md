@@ -4,7 +4,7 @@ In this example i am running https://github.com/mitreid-connect/OpenID-Connect-J
 
 I am using Apache Server for localhost and the `index.html` of the code to create `Access_Tokens` , `Refresh_Tokens` for the MitreID OpenIDConnect Server .
 
-#Example Configuration File you can use (JSON Format)
+# Example Configuration File you can use (JSON Format)
 
 ```
 {
