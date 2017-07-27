@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>JS Application</title>
+    <meta charset="utf-8" />
+
+    <!-- ------------------------- LINKS ------------------------------------ -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" />
+
+    <!--    Bootstrap Select-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+
+    <!--    Bootstrap Tags-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput-typeahead.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" />
+
+    <link rel="stylesheet" href="css/main.css" />
+    <!-- ------------------------- SCRIPTS ------------------------------------ -->
+
+    <!--Load JQuery-->
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+
+    <!-- Load Bootstrap-->
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+
+    <!--Load oidc-client-->
+    <script src="node_modules/oidc-client/dist/oidc-client.js"></script>
+
+    <!-- Load Bootstrap-tagsinput -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+</head>
+
+<body style="background-color:#303030; width:100%; height:100%;">
+
+    <div class="container-fluid">
+        <div class="row content">
+            <div class="col-sm-12">
+
+                <!-- Navigation Bar-->
+                <nav class="navbar navbar-inverse navbar-fixed-top">
+                    <div class="container">
+                        <div class="navbar-header" style="margin-left: 33%;">
+                            <a class="navbar-brand" href="#" style="color:white; ">OpenID Connect Javascript Application</a>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Main Container -->
+                <div id="invisible-div" class="container main-container collapse">
+                    <!-- style="display:none" -->
+
+                    <!-- EXTRA URLS  -->
+                    <div class="row">
+                        <div class="container" style="padding-bottom: 3px">
+                            <div class="input-group">
+                                <span class="input-group-addon" style="color:black; font-weight:bold">Authority URL</span>
+                                <input id="authority" type="text" value="" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="container" style="padding-bottom: 3px">
+                            <div class="input-group">
+                                <!-- Client ID -->
+                                <span class="input-group-addon" style="color:black; font-weight:bold">Client ID</span>
+                                <input id="client_id" type="text" value="" class="form-control">
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="container" style="padding-bottom: 3px">
+                            <div class="input-group">
+                                <!-- Client Secret-->
+                                <span class="input-group-addon" style="color:black; font-weight:bold">Client Secret</span>
+                                <input id="client_secret" type="text" value="" class="form-control">
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row">
+                        <div class="container" style="padding-bottom: 3px">
+                            <div class="input-group">
+
+                                <!-- URL OF API -->
+                                <!-- <span class="input-group-addon" style="color:black; font-weight:bold">URL</span>
+                                <input id="api-call-text-field1" type="text" value="http://localhost:8080/openid-connect-server-webapp" class="form-control">-->
+
+                                <!-- HTTP REST API CALL-->
+                                <span class="input-group-addon" style="color:black; font-weight:bold">API</span>
+                                <select id="HTTP_METHOD" class="selectpicker" data-style="btn-success" data-width="auto">
+                                   <option>GET</option>
+                                   <option>POST</option>
+                                   <option>DELETE</option>
+                                   <option>PATCH</option>
+                                   <option>PUT</option>
+                                </select>
+
+                                <!-- API CALL -->
+                                <!--                                <span class="input-group-addon" style="color:black; font-weight:bold">API</span>-->
+                                <select id="api-select-picker" class="selectpicker" data-style="btn-primary" data-width="auto">
+                                    
+                                  <optgroup label="Clients">
+                                    <option>clients</option>
+                                    <option>clients/{id}</option>
+                                   </optgroup>
+
+                                  <optgroup label="Whitelists">
+                                   <option>whitelist</option>
+                                   <option>whitelist/{id}</option>
+                                  </optgroup>
+
+                                  <optgroup label="Blacklists">
+                                   <option>blacklist</option>
+                                   <option>blacklist/{id}</option>
+                                  </optgroup>
+                        
+                                <optgroup label="System Scopes">
+                                 <option>scopes</option>
+                                 <option>scopes/{id}</option>
+                                 <option>scope/{id}</option>
+                                </optgroup>
+
+                                <optgroup label="User Site Approvals">
+                                 <option>approved</option>
+                                 <option>approved/{id}</option>
+                                </optgroup>
+
+                                <optgroup label="OAuth Tokens">
+                                 <option>tokens/access</option>
+                                 <option>tokens/access/{id}</option>
+                                 <option>tokens/refresh</option>
+                                <option>tokens/refresh/{id}</option>
+
+                                <optgroup label="Data">
+                                 <option>tokens/data</option>
+                                </optgroup>
+                               </select>
+
+                                <input id="api-call-text-field" type="text" value="clients" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <!-- Response_type -->
+                    <div class="row">
+                        <div class="container" style="padding-bottom: 3px">
+                            <div class="input-group">
+
+                                <!-- Response type -->
+                                <span class="input-group-addon" style="color:black; font-weight:bold">Response Type</span>
+
+                                <!-- Select Picker -->
+                                <select id="response_type" class="selectpicker" multiple data-actions-box="true" data-width="auto">
+                              <option>code</option>
+                              <option>id_token</option>
+                              <option>token</option>
+                            </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scopes -->
+                    <div class="row">
+                        <div class="container" style="padding-bottom: 3px">
+
+                            <div class="input-group">
+                                <!-- Scopes -->
+                                <span class="input-group-addon" style="color:black; font-weight:bold">Scopes</span>
+
+                                <!-- Select Picker -->
+                                <select id="scopes" class="selectpicker" multiple data-actions-box="true" data-width="auto">
+                              <option>openid</option>
+                              <option>profile</option>
+                              <option>email</option>
+                              <option>address</option>
+                              <option>phone</option>
+                              <option>offline_access</option>
+                            </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="row" style="margin-left:40%; padding-top:60px">
+                    <div class="col-sm-12">
+                        <ul class="list-inline list-unstyled requests">
+                            <!--                <li><a href="index.html" class="btn btn-primary">Home</a></li>-->
+                            <li><button type="button" class="btn btn-success js-login">Login</button></li>
+                            <li><button type="button" class="btn btn-warning js-call-api">Call API</button></li>
+                            <li><button type="button" class="btn btn-danger js-logout">Logout</button></li>
+                            <li> <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#invisible-div">Details</button></li>
+                        </ul>
+                    </div>
+                </div>
+
+
+<!--
+                <div class="row" style="margin-left:39%; padding-top: 30px;">
+                    <div class="col-sm-12">
+                        <h4 style="color:white"> Choose JSON Configuration File </h4>
+                        <input type="file" id="file-input" accept=".json" style="cursor:pointer" />
+                    </div>
+                </div>
+-->
+
+                <hr>
+
+                <!-- END OF EXTRA URLS  -->
+
+                <div class="container" style="padding-top: 15px">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">File Content</div>
+                                <div class="panel-body">
+                                    <pre id="file-content"></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">User data</div>
+                                    <div class="panel-body">
+                                        <pre class="js-user"></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">API call result</div>
+                                    <div class="panel-body">
+                                        <pre class="js-api-result"></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- ----------------------                       Load the Main Script                 ------------------------------------ -->
+
+        <!-- This script needs to be loaded right here -->
+        <script src="js/main.js"></script>
+        <script>
+            $.ajax({
+                url: "ClientConfiguration.json",
+                success: function(file_content) {
+                    //  console.log(file_content);
+                    displayContents(JSON.stringify(file_content, null, 2));
+                }
+            });
+
+        </script>
+
+
+
+</body>
+
+</html>

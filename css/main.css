@@ -1,0 +1,42 @@
+ input {
+     font-weight: bold;
+     background-color: black;
+     
+ }
+
+input[type="file"]{
+    color: white;
+}
+
+ .main-container {
+     padding-top: 70px;
+ }
+
+ pre:empty {
+     display: none;
+ }
+
+ .container {
+     margin-left: 20px;
+     margin-right: 20px;
+     width: auto;
+     height: 100%;
+ }
+
+ .dropdown-toggle {
+     border-radius: 0px !important;
+ }
+
+ h1,
+ h2,
+ h3,
+ h4,
+ h5,
+ h6 {
+     color: white;
+ }
+
+ .input-group-addon {
+     min-width: 150px;
+ }
+ 
