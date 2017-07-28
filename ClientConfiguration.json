@@ -3,5 +3,5 @@
    "client_id": "client",
    "client_secret": "secret ",
    "response_type": "code id_token token",
-   "scope": "openid profile email offline_access"
+   "scope": "openid profile email address offline_access"
 }

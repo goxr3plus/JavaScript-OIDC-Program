@@ -1,12 +1,11 @@
  input {
      font-weight: bold;
      background-color: black;
-     
  }
 
-input[type="file"]{
-    color: white;
-}
+ input[type="file"] {
+     color: white;
+ }
 
  .main-container {
      padding-top: 70px;
@@ -27,16 +26,28 @@ input[type="file"]{
      border-radius: 0px !important;
  }
 
- h1,
- h2,
- h3,
- h4,
- h5,
- h6 {
-     color: white;
- }
+
 
  .input-group-addon {
      min-width: 150px;
  }
- 
+ /*================================ Some extra juice pliz... ===================================*/
+
+ label {
+     color: black;
+     font-size: 15px;
+     font-weight: bold;
+     background-color: white;
+     border-radius: 15px;
+     padding: 9px;
+ }
+
+ .toggle.ios,
+ .toggle-on.ios,
+ .toggle-off.ios {
+     border-radius: 20px;
+ }
+
+ .toggle.ios .toggle-handle {
+     border-radius: 20px;
+ }

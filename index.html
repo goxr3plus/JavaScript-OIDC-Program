@@ -4,6 +4,7 @@
 <head>
     <title>JS Application</title>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- ------------------------- LINKS ------------------------------------ -->
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" />
@@ -14,6 +15,8 @@
     <!--    Bootstrap Tags-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput-typeahead.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" />
+
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="css/main.css" />
     <!-- ------------------------- SCRIPTS ------------------------------------ -->
@@ -32,6 +35,8 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 </head>
 
 <body style="background-color:#303030; width:100%; height:100%;">
@@ -43,19 +48,44 @@
                 <!-- Navigation Bar-->
                 <nav class="navbar navbar-inverse navbar-fixed-top">
                     <div class="container">
-                        <div class="navbar-header" style="margin-left: 33%;">
-                            <a class="navbar-brand" href="#" style="color:white; ">OpenID Connect Javascript Application</a>
+                        <div class="navbar-header" style="">
+                            <a class="navbar-brand" href="#" style="color:white;">
+                                <!-- Buttons -->
+                                <div class="btn-group btn-group-justified">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success js-login">Login</button>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-warning js-call-api">Call API</button>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-danger js-logout">Logout</button>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#invisible-div"><span class="glyphicon glyphicon-menu-hamburger"></span>Show Details</button>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <!-- Request Refresh Token-->
+                            <div class="row" style="margin-top:50px; position: fixed;  left: 50%; transform: translateX(-50%);">
+                                <label class="checkbox-inline"><input id="request_refresh_token" data-style="ios" type="checkbox" data-toggle="toggle"> Request Refresh Token</label>
+                            </div>
                         </div>
                     </div>
                 </nav>
 
+
+
+
+
                 <!-- Main Container -->
-                <div id="invisible-div" class="container main-container collapse">
+                <div id="invisible-div" class="container main-container">
                     <!-- style="display:none" -->
 
                     <!-- EXTRA URLS  -->
                     <div class="row">
-                        <div class="container" style="padding-bottom: 3px">
+                        <div class="container" style="padding-top:60px; padding-bottom: 3px">
                             <div class="input-group">
                                 <span class="input-group-addon" style="color:black; font-weight:bold">Authority URL</span>
                                 <input id="authority" type="text" value="" class="form-control">
@@ -93,10 +123,6 @@
                     <div class="row">
                         <div class="container" style="padding-bottom: 3px">
                             <div class="input-group">
-
-                                <!-- URL OF API -->
-                                <!-- <span class="input-group-addon" style="color:black; font-weight:bold">URL</span>
-                                <input id="api-call-text-field1" type="text" value="http://localhost:8080/openid-connect-server-webapp" class="form-control">-->
 
                                 <!-- HTTP REST API CALL-->
                                 <span class="input-group-addon" style="color:black; font-weight:bold">API</span>
@@ -154,10 +180,6 @@
                         </div>
                     </div>
 
-
-
-
-
                     <!-- Response_type -->
                     <div class="row">
                         <div class="container" style="padding-bottom: 3px">
@@ -195,70 +217,49 @@
                               <option>offline_access</option>
                             </select>
                             </div>
+                            <!--                            <button type="button" class="btn btn-success js-save">Save Configuration</button>-->
+                            <span class="label label-primary">Upload a JSON Configuration File </span>
+                            <input type="file" id="file-input" accept=".json" style="cursor:pointer" />
                         </div>
                     </div>
-                </div>
 
-                <!-- Buttons -->
-                <div class="row" style="margin-left:40%; padding-top:60px">
-                    <div class="col-sm-12">
-                        <ul class="list-inline list-unstyled requests">
-                            <!--                <li><a href="index.html" class="btn btn-primary">Home</a></li>-->
-                            <li><button type="button" class="btn btn-success js-login">Login</button></li>
-                            <li><button type="button" class="btn btn-warning js-call-api">Call API</button></li>
-                            <li><button type="button" class="btn btn-danger js-logout">Logout</button></li>
-                            <li> <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#invisible-div">Details</button></li>
-                        </ul>
-                    </div>
-                </div>
+                    <hr>
 
+                    <!-- END OF EXTRA URLS  -->
 
-<!--
-                <div class="row" style="margin-left:39%; padding-top: 30px;">
-                    <div class="col-sm-12">
-                        <h4 style="color:white"> Choose JSON Configuration File </h4>
-                        <input type="file" id="file-input" accept=".json" style="cursor:pointer" />
-                    </div>
-                </div>
--->
-
-                <hr>
-
-                <!-- END OF EXTRA URLS  -->
-
-                <div class="container" style="padding-top: 15px">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">File Content</div>
-                                <div class="panel-body">
-                                    <pre id="file-content"></pre>
-                                </div>
-                            </div>
-                        </div>
-
+                    <div class="container" style="padding-top: 15px">
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">User data</div>
+                                    <div class="panel-heading">File Content</div>
                                     <div class="panel-body">
-                                        <pre class="js-user"></pre>
+                                        <pre id="file-content"></pre>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-sm-3">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">API call result</div>
-                                    <div class="panel-body">
-                                        <pre class="js-api-result"></pre>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">User data</div>
+                                        <div class="panel-body">
+                                            <pre class="js-user"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">API call result</div>
+                                        <div class="panel-body">
+                                            <pre class="js-api-result"></pre>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -271,15 +272,23 @@
             $.ajax({
                 url: "ClientConfiguration.json",
                 success: function(file_content) {
-                    //  console.log(file_content);
+                    //console.log(file_content);
                     displayContents(JSON.stringify(file_content, null, 2));
                 }
             });
 
+//            $.ajax({
+//                type: 'PUT',
+//                url: "file.txt", //url of receiver file on server
+//                data: "hello", //your data
+//                success: function() {
+//                    //console.log(file_content);
+//                    console.log("Done");
+//                }, //callback when ajax request finishes
+//                //dataType: dataType //text/json...
+//            });
+
         </script>
-
-
-
 </body>
 
 </html>

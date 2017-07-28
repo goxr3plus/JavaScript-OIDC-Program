@@ -1,13 +1,11 @@
  // Clear all the fields -->
- $("#authority").val('');
- //$("#api-call-text-field").val('');
-
- $("#client_id").val('');
- $("#client_secret").val('');
+ // $("#authority").val('');
+ // $("#client_id").val('');
+ // $("#client_secret").val('');
 
 
  //Disable the Buttons by default show the user has to choose a File to Login 
- $('.js-login').prop("disabled", true);
+ // $('.js-login').prop("disabled", true);
  $('.js-call-api').prop("disabled", true);
  $('.js-logout').prop("disabled", true);
 
@@ -16,7 +14,7 @@
 
  //<!----------------------------------- File API------------------------------->
 
- // Check for the various File API support.
+ //  Check for the various File API support.
  if (window.File && window.FileReader && window.FileList && window.Blob) {
      // Great success! All the File APIs are supported.
  } else {
@@ -50,10 +48,11 @@
      $("#response_type").selectpicker('val', json.response_type.split(" "));
      $("#scopes").selectpicker('val', json.scope.split(" "));
 
+     checkRefreshTokenToggle();
      updateManager();
 
      //Enable all the buttons and show the div
-     $('.js-login').prop("disabled", false);
+     //     $('.js-login').prop("disabled", false);
      $('.js-call-api').prop("disabled", false);
      $('.js-logout').prop("disabled", false);
 
@@ -61,24 +60,66 @@
 
  }
 
- // document.getElementById('file-input')
- //     .addEventListener('change', readSingleFile, false);
+ function checkRefreshTokenToggle() {
+
+     //Listener for the refresh_token_label
+     if ($("#scopes").val().toString().split(',').indexOf("offline_access") != -1 && $("#response_type").val().toString().split(',').indexOf("code") != -1)
+         $('#request_refresh_token').bootstrapToggle('on');
+     else
+         $('#request_refresh_token').bootstrapToggle('off');
+
+ }
+
+ document.getElementById('file-input').addEventListener('change', readSingleFile, false);
 
  //<!----------------------------------- END OF File API------------------------------->
 
  var settings, manager, user;
 
  //-----------------Refresh the Manager every time below text fields text is changing---------------------------
+ $('#response_type , #scopes').on('changed.bs.select', function (e) {
+
+
+     checkRefreshTokenToggle();
+
+     //Update the Manager
+     updateManager();
+ });
+
+ $('#request_refresh_token , #request_refresh_token_label').bind('DOMSubtreeModified', function (e) {
+     alert('class changed');
+ });
+
  $("#request_refresh_token").change(function () {
-     if ($(this).is(':checked')) {
+     var scopes, response_type;
+     //alert("Called");
 
-         // console.log$("#response_type").val();
+     //When the checkbox is checked
+     if ($(this).prop('checked')) {
 
-         // $("#scopes").selectpicker('val', 'offline_access');
+         //-Response Type
+         response_type = $("#response_type").val().toString().split(',');
+         if (response_type.indexOf("code") === -1) response_type.push("code");
+
+
+         //--Scopes
+         scopes = $("#scopes").val().toString().split(',');
+         if (scopes.indexOf("offline_access") === -1) scopes.push("offline_access");
      } else {
 
-         //  $("#scopes").selectpicker('val', 'offline_access');
+         //-Response Type
+         response_type = $("#response_type").val().toString().split(',').filter(e => e !== "code");
+
+         //--Scopes
+         scopes = $("#scopes").val().toString().split(',').filter(e => e !== "offline_access");
      }
+
+
+     //console.log(scopes);
+     $("#scopes").selectpicker('val', scopes);
+     $("#response_type").selectpicker('val', response_type);
+
+     updateManager();
  });
 
  $("#api-call-text-field").on('keyup', function (e) {
@@ -132,6 +173,8 @@
      manager.signinPopup().catch(function (error) {
          console.error('error while logging in through the popup', error);
      });
+     $('.js-call-api').prop("disabled", false);
+     $('.js-logout').prop("disabled", false);
  });
 
 
@@ -184,6 +227,7 @@
          client_id: $("#client_id").val(),
          client_secret: $("#client_secret").val(),
          user_id: "user",
+
          popup_redirect_uri: 'http://localhost/jsApp/popup.html',
          silent_redirect_uri: 'http://localhost/jsApp/silent-renew.html',
          post_logout_redirect_uri: 'http://localhost/jsApp/index.html',
@@ -225,6 +269,10 @@
      $(selector).fadeOut("fast", function () {
          $(selector).text(data).fadeIn("fast");
      });
+
+     if (selector == '.js-user') {
+         // alert("Access Token Created!");
+     }
  }
 
  //When script has been loaded we need to Update the Manager by default
