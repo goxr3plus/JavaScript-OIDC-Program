@@ -24,4 +24,4 @@ http://snf-761523.vm.okeanos.grnet.gr/jsApp/index.html#
 }
 ```
 
-![Image](https://user-images.githubusercontent.com/20374208/28626454-b31ac4ea-7227-11e7-9f45-649734e3422f.png)
+![2](https://user-images.githubusercontent.com/20374208/28716667-197f84fc-73a7-11e7-866f-c5f7c34c6890.png)
