@@ -1,10 +1,16 @@
 # JavaScript-OIDC-Program
+You want to connect to your OpenIDConnect Server to debug it? 
 
-In this example i am running [OpenID-Connect-Java-Spring-Server](https://github.com/mitreid-connect/OpenID-Connect-Java-Spring-Server) on localhost using [TomCat](http://tomcat.apache.org/)  So before you run the `openid-connect-server-webapp` you have to change the `server-config.xml` file to point like this -> ``<property name="issuer" value="http://localhost:8080/openid-connect-server-webapp/" />``
+*Create new clients ? 
 
-I am using Apache Server for localhost and the `index.html` of the code to create `Access_Tokens` , `Refresh_Tokens` for the MitreID OpenIDConnect Server .
+*Create access and refresh tokens ?
 
-# Try it online here -> http://snf-761523.vm.okeanos.grnet.gr/jsApp/index.html#
+Well here you are :) You can use this simple JavaScript Application just configure 2-3 settings from the user interface and voila.
+
+Also you can load your own configuration as a JSON file. An example is shown below.
+
+# Try it online 
+http://snf-761523.vm.okeanos.grnet.gr/jsApp/index.html#
 
 # Example Configuration File you can use (JSON Format)
 
