@@ -4,10 +4,7 @@ In this example i am running [OpenID-Connect-Java-Spring-Server](https://github.
 
 I am using Apache Server for localhost and the `index.html` of the code to create `Access_Tokens` , `Refresh_Tokens` for the MitreID OpenIDConnect Server .
 
-
-### You can configurate the settings either by hand or uploading a configuration file in JSON format . It is very simple as shown below.
-
-Check this example [Example JSON Configuration File](https://github.com/goxr3plus/JavaScript-OIDC-Program/blob/master/Example%20OpenIDConnect.jSon)
+# Try it online here -> http://snf-761523.vm.okeanos.grnet.gr/jsApp/index.html#
 
 # Example Configuration File you can use (JSON Format)
 
